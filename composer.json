@@ -1,0 +1,12 @@
+{
+    "name": "philipnorton42/advent-of-code-2023",
+    "type": "project",
+    "autoload-dev": {
+        "psr-4": {
+            "Philipnorton42\\AdventOfCode2023\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}
