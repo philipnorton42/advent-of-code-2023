@@ -7,16 +7,11 @@ function findCalibrationNumber(string $string): int {
   $lastDigit = 0;
 
   for ($i = 0; $i < count($characters); $i++) {
-    if (is_numeric($characters[$i])) {
+    if ($firstDigit === 0 && is_numeric($characters[$i])) {
       $firstDigit = $characters[$i];
-      break;
     }
-  }
-
-  for ($i = count($characters) - 1; $i >= 0; $i--) {
-    if (is_numeric($characters[$i])) {
-      $lastDigit = $characters[$i];
-      break;
+    if ($lastDigit === 0 && is_numeric($characters[count($characters) - $i - 1])) {
+      $lastDigit = $characters[count($characters) - $i - 1];
     }
   }
 

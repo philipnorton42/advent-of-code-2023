@@ -1,10 +1,10 @@
 <?php
 
-require 'functions.php';
+require './1/functions.php';
 
 $total = 0;
 
-$values = file('1.data');
+$values = file('./1/1.data');
 
 foreach ($values as $id => $value) {
   $value = trim($value);
