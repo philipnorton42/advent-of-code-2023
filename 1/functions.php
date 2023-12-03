@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Find the calibration number from a given string.
+ *
+ * The calibration number is the first and last detected digit in the string.
+ *
+ * @param string $string
+ *   The string to extract the calibration number from.
+ *
+ * @return int
+ *   The calibration number.
+ */
 function findCalibrationNumber(string $string): int {
   $characters = str_split($string, 1);
 
@@ -18,6 +29,19 @@ function findCalibrationNumber(string $string): int {
   return (int) ($firstDigit . $lastDigit);
 }
 
+/**
+ * Convert any spelled out numbers in a string to a number.
+ *
+ * Some calibration numbers are hidden in spelled out numbers. This function
+ * will convert them into digits before we then extract them using the
+ * findCalibrationNumner() function.
+ *
+ * @param string $string
+ *   The string to convert.
+ *
+ * @return string
+ *   The converted string.
+ */
 function convertNumber(string $string): string {
   $numberWords = [
     '/nineight/',

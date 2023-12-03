@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Extract the game data from a given string.
+ *
+ * @param string $data
+ *   The data to extract.
+ *
+ * @return array
+ *   The game data as a 2-D array.
+ */
 function extractData(string $data): array {
   $data = explode("\n", $data);
   $lines = [];
@@ -10,6 +19,15 @@ function extractData(string $data): array {
   return $lines;
 }
 
+/**
+ * Extract numbers that are adjacent to non '.' characters.
+ *
+ * @param array $data
+ *   The game data extracted from extractData().
+ *
+ * @return array
+ *   A list of the extracted adjacent numbers.
+ */
 function extractAdjacentNumbers(array $data): array {
   $coordinatesArray = [
     [-1, -1],[-1, 0],[-1, 1],
@@ -46,6 +64,7 @@ function extractAdjacentNumbers(array $data): array {
               }
             }
 
+            // Extract the number.
             $number = '';
             if ($numberStart !== false && $numberEnd !== false) {
               for ($i = $numberStart; $i <= $numberEnd; $i++) {
@@ -54,6 +73,7 @@ function extractAdjacentNumbers(array $data): array {
              }
             }
 
+            // Store the extracted number.
             $numbers[] = (int) $number;
           }
         }
@@ -65,6 +85,19 @@ function extractAdjacentNumbers(array $data): array {
   return $numbers;
 }
 
+/**
+ * Extract gear ratio numbers.
+ *
+ * A gear ratio is the product of any numbers that are adjacent to a '*'
+ * symbol. The '*' symbol must have more than one number adjacent to it in
+ * order for it to be used.
+ *
+ * @param array $data
+ * The game data extracted from extractData().
+ *
+ * @return array
+ *   The gear ratio numbers.
+ */
 function extractGearRatioNumbers(array $data): array {
   $coordinatesArray = [
     [-1, -1],[-1, 0],[-1, 1],
@@ -103,6 +136,7 @@ function extractGearRatioNumbers(array $data): array {
               }
             }
 
+            // Extract the number.
             $number = '';
             if ($numberStart !== false && $numberEnd !== false) {
               for ($i = $numberStart; $i <= $numberEnd; $i++) {
@@ -111,6 +145,7 @@ function extractGearRatioNumbers(array $data): array {
               }
             }
 
+            // Store the extracted number for later.
             $numberParts[] = (int) $number;
           }
         }
