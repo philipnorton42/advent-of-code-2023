@@ -30,7 +30,6 @@ seed-to-soil map:
 52 50 2
 EOD;
 
-
     $data[] = [
       $seedData,
       [
