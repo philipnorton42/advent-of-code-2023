@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Extract the seed data.
+ *
+ * @param string $string
+ *   The seed data.
+ *
+ * @return array|array[]
+ *   The extracted seed data.
+ */
 function extractSeedData($string): array {
   $data = ['maps' => []];
 
@@ -39,6 +48,16 @@ function extractSeedData($string): array {
   return $data;
 }
 
+/**
+ * Find location for seed.
+ *
+ * @param array $maps
+ *   The maps.
+ * @param int $seed
+ *   The seed.
+ *
+ * @return int
+ */
 function findLocationForSeed(array $maps, int $seed): int {
 
   $sequence = [
@@ -53,6 +72,42 @@ function findLocationForSeed(array $maps, int $seed): int {
   ];
 
   $value = $seed;
+
+  for ($i = 0; $i < count($sequence) - 1; $i++) {
+    foreach ($maps[$sequence[$i] . '-to-' . $sequence[$i + 1]] as $id => $map) {
+      $upper = $maps[$sequence[$i] . '-to-' . $sequence[$i + 1]][$id]['upper'];
+      $lower = $maps[$sequence[$i] . '-to-' . $sequence[$i + 1]][$id]['lower'];
+      if ($lower <= $value && $upper >= $value) {
+        $mapStart = $maps[$sequence[$i] . '-to-' . $sequence[$i + 1]][$id]['map_start'];
+        $tmpVal = abs($lower - $value);
+        $value = $mapStart + $tmpVal;
+        // We have made our swap here, so don't allow any more swaps to happen for this map.
+        break;
+      }
+    }
+  }
+
+  return $value;
+}
+
+function findLocationForSeedLowest(array $maps, int $seed): int {
+
+  $sequence = [
+    'seed',
+    'soil',
+    'fertilizer',
+    'water',
+    'light',
+    'temperature',
+    'humidity',
+    'location',
+  ];
+
+  $value = $seed;
+
+  if (!isset($maps[$sequence[0] . '-to-' . $sequence[1]][$seed]['lower'])) {
+    return 0;
+  }
 
   for ($i = 0; $i < count($sequence) - 1; $i++) {
     foreach ($maps[$sequence[$i] . '-to-' . $sequence[$i + 1]] as $id => $map) {
